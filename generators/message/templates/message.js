@@ -2,8 +2,11 @@
 // Auto generated tray.io connector message
 
 module.exports = function(connector) { 
+
+	console.log("Listning for <%= message %> messages");
+
 	//add a health check method
-	connector.on("<%= name %>", connector.hasRequiredParams([], function(data, done, err) {
+	connector.on("<%= message %>", connector.hasRequiredParams([], function(data, done, err) {
 		//step reply
 		done({
 			parameter: "value"

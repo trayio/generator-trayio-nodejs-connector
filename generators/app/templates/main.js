@@ -14,3 +14,10 @@ fs.readdirSync(normalizedPath).forEach(function(file) {
   	require("./messages/" + file)(connector);
 });
 
+//Load any trigger handlers
+var triggersNormalizedPath = path.join(__dirname, "triggers");
+fs.readdirSync(triggersNormalizedPath).forEach(function(file) {
+	console.info("Adding trigger handler " + file);
+  	require("./triggers/" + file)(connector);
+});
+
