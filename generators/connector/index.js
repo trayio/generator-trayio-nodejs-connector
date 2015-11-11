@@ -1,6 +1,6 @@
 var generators = require('yeoman-generator');
 
-var MESSAGES_FOLDER = "messages";
+var OPERATION_FOLDER = "operations";
 
 module.exports = generators.Base.extend({
 	constructor: function () {

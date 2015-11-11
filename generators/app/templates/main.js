@@ -1,4 +1,4 @@
-var TrayConnector = require("trayio-connector-sdk-nodejs");
+var TrayConnector = require("trayio-connector-sdk");
 var path = require("path");
 var fs = require("fs");
 
@@ -7,11 +7,11 @@ console.info("Starting <%= title %> connector");
 //Create a new tray connector instance
 var connector = new TrayConnector({});
 
-//Load any message handlers from the messages folder
-var normalizedPath = path.join(__dirname, "messages");
+//Load any message handlers from the operations folder
+var normalizedPath = path.join(__dirname, "operations");
 fs.readdirSync(normalizedPath).forEach(function(file) {
 	console.info("Adding connector message handler " + file);
-  	require("./messages/" + file)(connector);
+  	require("./operations/" + file)(connector);
 });
 
 //Load any trigger handlers

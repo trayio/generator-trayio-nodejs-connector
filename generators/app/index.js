@@ -1,7 +1,7 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 
-var MESSAGES_FOLDER = "messages";
+var OPERATION_FOLDER = "operations";
 
 module.exports = generators.Base.extend({
 	constructor: function () {
@@ -118,7 +118,7 @@ module.exports = generators.Base.extend({
 	createHealthz: function() {
 	    this.fs.copyTpl(
 			this.templatePath("healthz.js"),
-			this.destinationPath(MESSAGES_FOLDER + "/healthz.js"),
+			this.destinationPath(OPERATION_FOLDER + "/healthz.js"),
 			{
 			}
 	    );			

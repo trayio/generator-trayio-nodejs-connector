@@ -1,7 +1,7 @@
 var generators = require('yeoman-generator');
 var _ = require('underscore');
 
-var MESSAGES_FOLDER = "messages";
+var OPERATION_FOLDER = "operations";
 
 module.exports = generators.Base.extend({
 	constructor: function () {
@@ -34,13 +34,13 @@ module.exports = generators.Base.extend({
 			this.connectorName = this.options.connectorName;
 		}	
 	},		
-	promptMessageName: function() {
+	promptOperationName: function() {
 		if (!this.options.name) {
 	 		var done = this.async();
 			this.prompt({
 				type    : 'input',
 				name    : 'name',
-				message : 'Message name'
+				message : 'Operation name'
 			}, function (answers) {
 				this.log(answers.name);
 				this.name = answers.name;			
@@ -50,13 +50,13 @@ module.exports = generators.Base.extend({
 			this.name = this.options.name;
 		}	
 	},	
-	promptMessageTitle: function() {
+	promptOperationTitle: function() {
 		if (!this.options.title) {
 	 		var done = this.async();
 			this.prompt({
 				type    : 'input',
 				name    : 'title',
-				message : 'Message title'
+				message : 'Operation title'
 			}, function (answers) {
 				this.log(answers.title);
 				this.title = answers.title;			
@@ -66,13 +66,13 @@ module.exports = generators.Base.extend({
 			this.title = this.options.title;
 		}	
 	},	
-	promptMessageHelpLink: function() {
+	promptOperationHelpLink: function() {
 		if (!this.options.help_link) {
 	 		var done = this.async();
 			this.prompt({
 				type    : 'input',
 				name    : 'help_link',
-				message : 'Message help link'
+				message : 'Operation help link'
 			}, function (answers) {
 				this.log(answers.help_link);
 				this.help_link = answers.help_link;			
@@ -84,8 +84,8 @@ module.exports = generators.Base.extend({
 	},	
 	createHttp: function() {
 	    this.fs.copyTpl(
-			this.templatePath("message.js"),
-			this.destinationPath(MESSAGES_FOLDER + "/" + this.name + ".js"),
+			this.templatePath("operation.js"),
+			this.destinationPath(OPERATION_FOLDER + "/" + this.name + ".js"),
 			{
 				message: this.name
 			}

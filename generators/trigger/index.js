@@ -21,7 +21,7 @@ module.exports = generators.Base.extend({
 			connectorType: "trigger",
 			help_link: "#"
 		}});		    
-		this.composeWith('trayio-nodejs-connector:message', { options: {
+		this.composeWith('trayio-nodejs-connector:operation', { options: {
 			connectorName: this.connectorName + "-trigger",
 			name: "trigger-init",
 			title: "Trigger",

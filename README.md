@@ -1,6 +1,6 @@
 #Yeoman generator for tray.io Node.JS connectors
 
-This Yeoman generator allows you to quickly create a skeleton Node.JS project for tray.io connectors, and provides several commands you can use to do things like create new connectors or add new message handlers.
+This Yeoman generator allows you to quickly create a skeleton Node.JS project for tray.io connectors, and provides several commands you can use to do things like create new connectors or add new operation handlers.
 
 The core functionality of a Node.JS connector is wrapped up into the [tray.io Node.JS connector sdk](https://github.com/trayio/trayio-connector-sdk-nodejs), you should also read the connector specification so you understand how the connector works.
 
@@ -30,7 +30,7 @@ Then run the generator using yo, followig the instructions to create your skelet
 
 ```yo trayio-nodejs-connector```
 
-If you want to create workflow trigger connector, you will be prompted to **Include an HTTP trigger?**. If you say yes, a trigger connector will be created and the associated init message handler and http request handlers. For more information see the **HTTP Connectors** section below.
+If you want to create workflow trigger connector, you will be prompted to **Include an HTTP trigger?**. If you say yes, a trigger connector will be created and the associated init operation handler and http request handlers. For more information see the **HTTP Connectors** section below.
 
 ##Running / Testing Your Connector
 
@@ -68,21 +68,21 @@ If you didnt create an HTTP trigger when you created the skeleton project, or if
 ```yo trayio-nodejs-connector:trigger```
 
 
-##Creating Message Handlers
+##Creating Operation Handlers
 
-To create a new message handler, run the following yo command and follow the instructions.
+To create a new operation handler, run the following yo command and follow the instructions.
 
-```yo trayio-nodejs-connector:message```
+```yo trayio-nodejs-connector:operation```
 
 ####Connector
-Chose the connector for which you wish to add the new message handler for (using the up/down arrow keys).  If you have not created a connector yet, you will only be presented with the trigger connector.
+Chose the connector for which you wish to add the new operation handler for (using the up/down arrow keys).  If you have not created a connector yet, you will only be presented with the trigger connector.
 
-####Message Name
-The name of your message using only lowercase a-z and dashes.
+####Operation Name
+The name of your operation using only lowercase a-z and dashes.
 
 ####Title
-A descriptive title which will be used within the tray.io builder when displaying the connector.
+A descriptive title which will be used within the tray.io builder when displaying the available operations for a connector.
 
 ####Help Link
-A URL to a help document describing the message and its input/output. In some 3rd party SaaS connectors, this could be a direct mapping to the API documentation for the operation.
+A URL to a help document describing the operation and its input/output. In some 3rd party SaaS connectors, this could be a direct mapping to the API documentation for the operation.
 
