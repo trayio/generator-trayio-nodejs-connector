@@ -4,8 +4,6 @@ var bodyParser = require("body-parser");
 
 module.exports = function(connector) {
 
-	console.log("Creating http trigger");
-
 	//listen for trigger http requests
 	connector.trigger(function(request, response, metadata, requestMetadata, triggerWorkflow) {
 

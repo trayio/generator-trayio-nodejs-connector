@@ -3,8 +3,6 @@
 
 module.exports = function(connector) { 
 
-	console.log("Listning for <%= message %> messages");
-
 	//add a health check method
 	connector.on("<%= message %>", connector.hasRequiredParams([], function(data, done, err) {
 		//step reply
