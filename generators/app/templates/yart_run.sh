@@ -1,1 +1,1 @@
-CONNECTOR_WEBSOCKET_URL=ws://localhost:8989/ws/deployment1 CONNECTOR_HTTP_PORT=8888 node index.js
+CONNECTOR_WEBSOCKET_URL=ws://localhost:8989/ws/deployment1 CONNECTOR_HTTP_PORT=8888 node main.js
