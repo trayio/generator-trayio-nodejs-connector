@@ -10,6 +10,8 @@ To start using this generator, you need to first follow the [Yeoman Getting Star
 
 ##Installation
 
+**Note: Currently this generator has not been published, so you will have to clone this repository and use ```npm link`` from within the cloned repository to use it**
+
 To install this generator for use with Yeoman, use the following command in your terminal:
 
 ```npm install -g generator-trayio-nodejs-connector```
