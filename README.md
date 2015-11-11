@@ -10,7 +10,7 @@ To start using this generator, you need to first follow the [Yeoman Getting Star
 
 ##Installation
 
-**Note: Currently this generator has not been published, so you will have to clone this repository and use ```npm link`` from within the cloned repository to use it**
+**Note: Currently this generator has not been published, so you will have to clone this repository and use ```npm link``` from within the cloned repository to use it**
 
 To install this generator for use with Yeoman, use the following command in your terminal:
 
@@ -38,7 +38,7 @@ If you want to create workflow trigger connector, you will be prompted to **Incl
 
 If you want to test your connector you can run it using the included `yart_run.sh`.  This is for use with our Yart connector testing tool and has the default environment variables already set for you. Please see yart for more details.
 
-**Note: If you are not using a *nix flavour of OS, then you can just manually set the two environment variables needed to test the connector, and then directly call ```node main.js```.
+**Note: If you are not using a *nix flavour of OS, then you can just manually set the two environment variables needed to test the connector, and then directly call ```node main.js```.**
 
 ```
 CONNECTOR_WEBSOCKET_URL=ws://localhost:8989/ws/deployment1 
