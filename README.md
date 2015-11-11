@@ -38,6 +38,13 @@ If you want to create workflow trigger connector, you will be prompted to **Incl
 
 If you want to test your connector you can run it using the included `yart_run.sh`.  This is for use with our Yart connector testing tool and has the default environment variables already set for you. Please see yart for more details.
 
+**Note: If you are not using a *nix flavour of OS, then you can just manually set the two environment variables needed to test the connector, and then directly call ```node main.js```.
+
+```
+CONNECTOR_WEBSOCKET_URL=ws://localhost:8989/ws/deployment1 
+CONNECTOR_HTTP_PORT=8888
+```
+
 ##Creating Connectors
 
 Each project can support many connectors.  Each connector defined within a project will be displayed as a seperate icon with the tray.io builder interface.  When you created your skeleto project if you chose Yes when asked **Include an HTTP trigger?**, the generator will have already created a trigger connector for you, you can however create additional connectors which represent general service functionality or outputs.
