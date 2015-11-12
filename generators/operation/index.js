@@ -87,7 +87,7 @@ module.exports = generators.Base.extend({
 			this.templatePath("operation.js"),
 			this.destinationPath(OPERATION_FOLDER + "/" + this.name + ".js"),
 			{
-				message: this.name
+				name: this.name
 			}
 	    );		
 	},
