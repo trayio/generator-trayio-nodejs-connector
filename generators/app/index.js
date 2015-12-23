@@ -91,6 +91,7 @@ module.exports = generators.Base.extend({
 		this.fs.copyTpl(this.templatePath(".gitignore"),this.destinationPath(".gitignore"),{});	
 		this.fs.copyTpl(this.templatePath(".jsinspectrc"),this.destinationPath(".jsinspectrc"),{});	
 		this.fs.copyTpl(this.templatePath(".travis.yml"),this.destinationPath(".travis.yml"),{});	
+		this.fs.copyTpl(this.templatePath("Gruntfile.js"),this.destinationPath("Gruntfile.js"),{});	
 
 	    this.fs.copyTpl(this.templatePath("README.md"),this.destinationPath("README.md"),
 	    {
@@ -106,6 +107,9 @@ module.exports = generators.Base.extend({
 	installSDKDependency: function() {
 		this.npmInstall(['trayio-connector-sdk'], { 'save': true });		
 	},	
+	installGruntDependency: function () {
+		this.npmInstall(['grunt', 'grunt-contrib-jshint', 'grunt-contrib-watch'], { 'saveDev': true });
+	},
 	createMain: function() {
 	    this.fs.copyTpl(
 			this.templatePath("main.js"),

@@ -45,6 +45,14 @@ CONNECTOR_WEBSOCKET_URL=ws://localhost:8989/ws/deployment1
 CONNECTOR_HTTP_PORT=8888
 ```
 
+###Grunt workflow
+
+* Run `grunt dev` to automatically lint JS files as you go. 
+* Run `grunt` to link them just the once
+
+More to come here.
+
+
 ##Creating Connectors
 
 Each project can support many connectors.  Each connector defined within a project will be displayed as a seperate icon with the tray.io builder interface.  When you created your skeleto project if you chose Yes when asked **Include an HTTP trigger?**, the generator will have already created a trigger connector for you, you can however create additional connectors which represent general service functionality or outputs.
