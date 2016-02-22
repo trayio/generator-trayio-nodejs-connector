@@ -122,7 +122,12 @@ module.exports = generators.Base.extend({
 		});
 	},
 	installGruntDependency: function() {
-		this.npmInstall(['grunt', 'grunt-contrib-jshint', 'grunt-contrib-watch'], {
+		this.npmInstall([
+			'grunt', 
+			'grunt-contrib-jshint', 
+			'grunt-contrib-watch',
+			'generate-schema'
+		], {
 			'saveDev': true
 		});
 	},
