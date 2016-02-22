@@ -1,5 +1,6 @@
 var generators = require('yeoman-generator');
 var path = require('path');
+var slugify = require('mout/string/slugify');
 
 var OPERATION_FOLDER = "operations";
 
@@ -8,13 +9,26 @@ module.exports = generators.Base.extend({
 		generators.Base.apply(this, arguments);		
 		this.connectorName = process.cwd().split(path.sep).pop();
 	},	
+	promptProjectTitle: function() {
+		var done = this.async();
+		this.prompt({
+			type    : 'input',
+			name    : 'title',
+			message : 'Connector title (as it will appear in the tray UI)',
+			default : this.appname // Default to current folder name
+		}, function (answers) {
+			this.log(answers.title);
+			this.title = answers.title;			
+			done();
+		}.bind(this));		
+	},
 	promptProjectName: function() {
 		var done = this.async();
 		this.prompt({
 			type    : 'input',
 			name    : 'name',
-			message : 'Your connector name',
-			default : this.appname // Default to current folder name
+			message : 'Connector name (how it will be referenced in workflows)',
+			default : slugify(this.title) // Default to current folder name
 		}, function (answers) {
 			this.log(answers.name);
 			this.name = answers.name;			
@@ -105,32 +119,56 @@ module.exports = generators.Base.extend({
 		this.fs.write(this.destinationPath("connectors.json"), JSON.stringify([]));
 	},
 	installSDKDependency: function() {
-		this.npmInstall(['trayio-connector-sdk'], { 'save': true });		
+		this.npmInstall(['@trayio/falafel'], { 'save': true });		
 	},	
 	installGruntDependency: function () {
 		this.npmInstall(['grunt', 'grunt-contrib-jshint', 'grunt-contrib-watch'], { 'saveDev': true });
+	},
+
+	createConnectorModule: function () {
+
 	},
 	createMain: function() {
 	    this.fs.copyTpl(
 			this.templatePath("main.js"),
 			this.destinationPath("main.js"),
 			{
-				title: this.name
+				title: this.title
 			}
 	    );		
 	},
-	createHealthz: function() {
-	    this.fs.copyTpl(
-			this.templatePath("healthz.js"),
-			this.destinationPath(OPERATION_FOLDER + "/healthz.js"),
-			{
-			}
-	    );			
-	},
-	createHttp: function() {
-		if (this.includeHttpTrigger) {		  
-			this.composeWith("trayio-nodejs-connector:trigger", { options: {				
-			}});		  
+	createConnectorsFolder: function () {
+		console.log('creating connectors folder');
+
+		this.fs.copyTpl(this.templatePath("connector/connector.js"),this.destinationPath('connectors/'+this.name+'/connector.js'),{
+			title: this.title,
+			description: this.description
+		});
+
+		this.fs.copyTpl(this.templatePath('connector/global.js'), this.destinationPath('connectors/'+this.name+'/global.js'), {});
+
+		if (this.includeHttpTrigger) {
+			this.fs.copyTpl(this.templatePath('connector/trigger.js'), this.destinationPath('connectors/'+this.name+'/trigger.js'), {});
 		}
+	},
+	createSampleMessage: function () {
+		this.fs.copyTpl(
+			this.templatePath('connector/sample_message/model.js'), 
+			this.destinationPath('connectors/'+this.name+'/sample_message/model.js'), {}
+		);
+		this.fs.copyTpl(
+			this.templatePath('connector/sample_message/schema.js'), 
+			this.destinationPath('connectors/'+this.name+'/sample_message/schema.js'), {}
+		);
+		this.fs.copyTpl(
+			this.templatePath('connector/sample_message/response.sample.json'), 
+			this.destinationPath('connectors/'+this.name+'/sample_message/response.sample.json'), {}
+		);
 	}
+	// createHttp: function() {
+	// 	if (this.includeHttpTrigger) {		  
+	// 		this.composeWith("trayio-nodejs-connector:trigger", { options: {				
+	// 		}});		  
+	// 	}
+	// }
 });
