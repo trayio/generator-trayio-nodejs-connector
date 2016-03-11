@@ -34,14 +34,14 @@ If you want to create workflow trigger connector, you will be prompted to **Incl
 
 ##Running / Testing Your Connector
 
-If you want to test your connector you can run it using the included `yart_run.sh`.  This is for use with our Yart connector testing tool and has the default environment variables already set for you. Please see yart for more details.
-
-**Note: If you are not using a *nix flavour of OS, then you can just manually set the two environment variables needed to test the connector, and then directly call ```node main.js```.**
+To run the connector, you'll need to run:
 
 ```
-CONNECTOR_WEBSOCKET_URL=ws://localhost:8989/ws/deployment1 
-CONNECTOR_HTTP_PORT=8888
+NODE_ENV=development node main.js
 ```
+
+You'll also need to run `yart` in your command line to mimic how the tray platform will interact with your connector.
+
 
 ###Grunt workflow
 
