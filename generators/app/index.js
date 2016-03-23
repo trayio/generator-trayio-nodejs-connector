@@ -101,7 +101,7 @@ module.exports = generators.Base.extend({
 		this.fs.copyTpl(this.templatePath(".editorconfig"), this.destinationPath(".editorconfig"), {});
 		this.fs.copyTpl(this.templatePath(".eslintignore"), this.destinationPath(".eslintignore"), {});
 		this.fs.copyTpl(this.templatePath(".eslintrc"), this.destinationPath(".eslintrc"), {});
-		this.fs.copyTpl(this.templatePath(".gitignore"), this.destinationPath(".gitignore"), {});
+		this.fs.copyTpl(this.templatePath("_gitignore"), this.destinationPath(".gitignore"), {}); // hack
 		this.fs.copyTpl(this.templatePath(".jsinspectrc"), this.destinationPath(".jsinspectrc"), {});
 		this.fs.copyTpl(this.templatePath(".travis.yml"), this.destinationPath(".travis.yml"), {});
 		this.fs.copyTpl(this.templatePath("Gruntfile.js"), this.destinationPath("Gruntfile.js"), {});
