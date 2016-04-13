@@ -7,6 +7,8 @@
 
 module.exports = {
 
-
+  input: {
+    // Add generic schema inputs (API keys etc) in here
+  }
 
 };
