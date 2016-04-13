@@ -123,8 +123,8 @@ module.exports = generators.Base.extend({
 	},
 	installGruntDependency: function() {
 		this.npmInstall([
-			'grunt', 
-			'grunt-contrib-jshint', 
+			'grunt',
+			'grunt-contrib-jshint',
 			'grunt-contrib-watch',
 			'generate-schema'
 		], {
@@ -145,7 +145,8 @@ module.exports = generators.Base.extend({
 			description: this.description
 		});
 
-		this.fs.copyTpl(this.templatePath('connector/global.js'), this.destinationPath('connectors/' + this.name + '/global.js'), {});
+		this.fs.copyTpl(this.templatePath('connector/global_model.js'), this.destinationPath('connectors/' + this.name + '/global_model.js'), {});
+		this.fs.copyTpl(this.templatePath('connector/global_schema.js'), this.destinationPath('connectors/' + this.name + '/global_schema.js'), {});
 
 		if (this.includeHttpTrigger) {
 			this.fs.copyTpl(this.templatePath('connector/trigger.js'), this.destinationPath('connectors/' + this.name + '/trigger.js'), {});
