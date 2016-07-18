@@ -126,7 +126,9 @@ module.exports = generators.Base.extend({
 			'grunt',
 			'grunt-contrib-jshint',
 			'grunt-contrib-watch',
-			'generate-schema'
+			'generate-schema',
+			'body-parser',
+			'express'
 		], {
 			'saveDev': true
 		});

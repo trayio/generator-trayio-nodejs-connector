@@ -1,6 +1,9 @@
 var Falafel = require('@trayio/falafel');
 
-// Start the server by wrapping the current directory
-new Falafel().wrap({
+// Set up the lambda function by wrapping the current directory
+var apptalk = new Falafel().wrap({
 	directory: __dirname+'/'
 });
+
+// Export the apptalk lambda function
+exports.apptalk = apptalk;
