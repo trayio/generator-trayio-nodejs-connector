@@ -24,6 +24,6 @@
     "url": "<%= repository %>"
   },
   "engines": {
-    "node": "5.9.x"
+    "node": "4.3.0"
   }
 }

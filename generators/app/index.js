@@ -35,6 +35,19 @@ module.exports = generators.Base.extend({
 			done();
 		}.bind(this));
 	},
+	promptServiceName: function () {
+		var done = this.async();
+		this.prompt({
+			type: 'input',
+			name: 'service',
+			message: 'Service name (the app the connector will be tied to)',
+			default: this.name // Default to current folder name
+		}, function(answers) {
+			this.log(answers.service);
+			this.service = answers.service;
+			done();
+		}.bind(this));
+	},
 	promptProjectDescription: function() {
 		var done = this.async();
 		this.prompt({
@@ -111,6 +124,9 @@ module.exports = generators.Base.extend({
 			description: this.description,
 		});
 		this.fs.copyTpl(this.templatePath("yart_run.sh"), this.destinationPath("yart_run.sh"), {});
+		this.fs.copyTpl(this.templatePath("toss.json"), this.destinationPath("toss.json"), {
+			service: this.service
+		});
 
 	},
 	createConnectorJSON: function() {

@@ -1,5 +1,4 @@
 {
-  "service": "yourservice",
   "lambda": {
     "runtime": "nodejs4.3",
     "handler": "main.apptalk",
