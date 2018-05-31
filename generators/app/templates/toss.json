@@ -1,7 +1,7 @@
 {
   "service": "<%= service %>",
   "lambda": {
-    "runtime": "nodejs4.3",
+    "runtime": "nodejs6.10",
     "handler": "main.apptalk",
     "memory": 256,
     "timeout": 45,
