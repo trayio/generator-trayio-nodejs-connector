@@ -1,5 +1,6 @@
 {
   "service": "<%= service %>",
+  "is_private": true,
   "lambda": {
     "runtime": "nodejs6.10",
     "handler": "main.apptalk",
