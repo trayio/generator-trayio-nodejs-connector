@@ -133,22 +133,30 @@ module.exports = generators.Base.extend({
 		this.fs.write(this.destinationPath("connectors.json"), JSON.stringify([]));
 	},
 	installSDKDependency: function() {
-		this.npmInstall(['@trayio/falafel'], {
-			'save': true
-		});
+		this.npmInstall(
+			[
+				'@trayio/falafel',
+				'aws-sdk'
+			],
+			{
+				'save': true
+			}
+		);
 	},
 	installGruntDependency: function() {
-		this.npmInstall([
-			'grunt',
-			'grunt-contrib-jshint',
-			'grunt-contrib-watch',
-			'generate-schema',
-			'body-parser',
-			'express',
-			'aws-sdk'
-		], {
-			'saveDev': true
-		});
+		this.npmInstall(
+			[
+				'grunt',
+				'grunt-contrib-jshint',
+				'grunt-contrib-watch',
+				'generate-schema',
+				'body-parser',
+				'express'
+			],
+			{
+				'saveDev': true
+			}
+		);
 	},
 	createMain: function() {
 		this.fs.copyTpl(
