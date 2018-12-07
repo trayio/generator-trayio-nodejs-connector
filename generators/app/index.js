@@ -144,7 +144,8 @@ module.exports = generators.Base.extend({
 			'grunt-contrib-watch',
 			'generate-schema',
 			'body-parser',
-			'express'
+			'express',
+			'aws-sdk'
 		], {
 			'saveDev': true
 		});
