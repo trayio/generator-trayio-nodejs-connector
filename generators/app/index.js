@@ -135,8 +135,7 @@ module.exports = generators.Base.extend({
 	installSDKDependency: function() {
 		this.npmInstall(
 			[
-				'@trayio/falafel',
-				'aws-sdk'
+				'@trayio/falafel'
 			],
 			{
 				'save': true
