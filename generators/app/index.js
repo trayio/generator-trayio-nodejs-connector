@@ -145,6 +145,7 @@ module.exports = generators.Base.extend({
 	installGruntDependency: function() {
 		this.npmInstall(
 			[
+				'eslint',
 				'grunt',
 				'grunt-contrib-jshint',
 				'grunt-contrib-watch',
