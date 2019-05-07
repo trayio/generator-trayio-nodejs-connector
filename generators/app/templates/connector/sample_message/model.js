@@ -10,4 +10,4 @@ module.exports = {
 
 	url: 'https://s3-eu-west-1.amazonaws.com/static.tray.io/connectors/falafel/response.sample.json'
 
-}
+};
