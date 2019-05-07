@@ -1,7 +1,6 @@
 /*
-* Message schema
-*
-* Documentation: https://github.com/trayio/falafel#schema
+	Operation schema
+	Documentation: https://github.com/trayio/falafel#schema
 */
 
 module.exports = {

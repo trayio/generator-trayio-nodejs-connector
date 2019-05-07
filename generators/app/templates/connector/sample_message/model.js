@@ -1,7 +1,6 @@
 /*
-* Message model config.
-*
-* Documentation: https://github.com/trayio/falafel#model
+	Operation model config.
+	Documentation: https://github.com/trayio/falafel#model
 */
 
 

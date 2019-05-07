@@ -90,7 +90,7 @@ module.exports = generators.Base.extend({
 			type: 'confirm',
 			name: 'httpTrigger',
 			message: 'Include an HTTP trigger?',
-			default: true
+			default: false
 		}, function(answers) {
 			this.log(answers.httpTrigger);
 			this.includeHttpTrigger = answers.httpTrigger;
