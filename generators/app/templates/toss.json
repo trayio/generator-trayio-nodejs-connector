@@ -1,11 +1,12 @@
 {
-  "service": "<%= service %>",
-  "is_private": true,
-  "lambda": {
-    "runtime": "nodejs6.10",
-    "handler": "main.apptalk",
-    "memory": 256,
-    "timeout": 45,
-    "hooks": {}
-  }
+	"service": "<%= service %>",
+	"service_version": 1,
+	"is_private": true,
+	"lambda": {
+		"runtime": "nodejs8.10",
+		"handler": "main.apptalk",
+		"memory": 256,
+		"timeout": 45,
+		"hooks": {}
+	}
 }

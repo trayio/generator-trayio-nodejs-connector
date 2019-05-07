@@ -1,6 +1,7 @@
 var generators = require('yeoman-generator');
 var path = require('path');
 var slugify = require('mout/string/slugify');
+var sentenceCase = require('mout/string/sentenceCase');
 
 var OPERATION_FOLDER = "operations";
 
@@ -15,7 +16,7 @@ module.exports = generators.Base.extend({
 			type: 'input',
 			name: 'title',
 			message: 'Connector title (as it will appear in the tray UI)',
-			default: this.appname // Default to current folder name
+			default: sentenceCase(this.appname) // Default to current folder name
 		}, function(answers) {
 			this.log(answers.title);
 			this.title = answers.title;
@@ -65,7 +66,8 @@ module.exports = generators.Base.extend({
 		this.prompt({
 			type: 'input',
 			name: 'author',
-			message: 'Author'
+			message: 'Author',
+			default: 'tray.io'
 		}, function(answers) {
 			this.log(answers.author);
 			this.author = answers.author;
@@ -90,7 +92,7 @@ module.exports = generators.Base.extend({
 			type: 'confirm',
 			name: 'httpTrigger',
 			message: 'Include an HTTP trigger?',
-			default: true
+			default: false
 		}, function(answers) {
 			this.log(answers.httpTrigger);
 			this.includeHttpTrigger = answers.httpTrigger;
@@ -169,6 +171,7 @@ module.exports = generators.Base.extend({
 	createConnectorsFolder: function() {
 		this.fs.copyTpl(this.templatePath("connector/connector.js"), this.destinationPath('connectors/' + this.name + '/connector.js'), {
 			title: this.title,
+			name: this.name,
 			description: this.description
 		});
 
