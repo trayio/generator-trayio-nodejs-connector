@@ -171,6 +171,7 @@ module.exports = generators.Base.extend({
 	createConnectorsFolder: function() {
 		this.fs.copyTpl(this.templatePath("connector/connector.js"), this.destinationPath('connectors/' + this.name + '/connector.js'), {
 			title: this.title,
+			name: this.name,
 			description: this.description
 		});
 
