@@ -29,7 +29,7 @@ module.exports = class extends generators {
 				type: 'input',
 				name: 'service',
 				message: 'Service name (the app the connector will be tied to)',
-				default: slugify(title) // Default to current folder name
+				default: title // Default to current folder name
 			},
 			{
 				type: 'input',
