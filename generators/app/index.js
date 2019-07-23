@@ -48,7 +48,6 @@ module.exports = class extends generators {
 				message: 'Repository'
 			},
 		])
-		console.log(answers);
 		this.title = title;
 		this.name = answers.name;
 		this.service = answers.service;
@@ -57,7 +56,6 @@ module.exports = class extends generators {
 		this.repository = answers.repository;
 	}
 	createPackage() {
-		console.log('packages');
 		this.fs.copyTpl(
 			this.templatePath("package.json"),
 			this.destinationPath("package.json"), {
@@ -69,7 +67,6 @@ module.exports = class extends generators {
 		);
 	}
 	copyFiles() {
-		console.log('copy');
 
 		//copy .files
 		this.fs.copyTpl(this.templatePath(".editorconfig"), this.destinationPath(".editorconfig"), {});
@@ -104,8 +101,6 @@ module.exports = class extends generators {
 				'eslint',
 				'eslint-config-prettier',
 				'eslint-plugin-prettier',
-				'generate-schema',
-				'body-parser',
 				'express'
 			],
 			{
