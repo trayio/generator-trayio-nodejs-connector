@@ -145,7 +145,10 @@ module.exports = generators.Base.extend({
 	installGruntDependency: function() {
 		this.npmInstall(
 			[
+				'prettier',
 				'eslint',
+				'eslint-config-prettier',
+				'eslint-plugin-prettier',
 				'grunt',
 				'grunt-contrib-jshint',
 				'grunt-contrib-watch',

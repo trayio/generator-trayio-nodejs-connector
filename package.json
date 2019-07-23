@@ -11,7 +11,7 @@
   "author": "Ali Russell",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "mout": "^1.1.0",
     "yeoman-generator": "^0.21.2"
   }
