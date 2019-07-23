@@ -3,7 +3,6 @@
  *
  * Documentation: https://github.com/trayio/falafel#connector-file
  */
-
 module.exports = {
 	// The name of the connector is the folder name
 
