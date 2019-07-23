@@ -1,7 +1,11 @@
-var generators = require('yeoman-generator');
-var path = require('path');
-var slugify = require('mout/string/slugify');
-var sentenceCase = require('mout/string/sentenceCase');
+const generators = require('yeoman-generator');
+const path = require('path');
+const slugify = require('mout/string/slugify');
+const filter = require('gulp-filter');
+const removeComments = require('gulp-decomment');
+const sentenceCase = require('mout/string/sentenceCase');
+
+const jsFilter = filter('**/*.js', { restore: true });
 
 module.exports = class extends generators {
 	constructor(args, opts) {
@@ -48,11 +52,18 @@ module.exports = class extends generators {
 				type: 'input',
 				name: 'repository',
 				message: 'Repository',
+				default: 'https://github.com/trayio/connectors.git',
 			},
 			{
 				type: 'confirm',
-				name: 'includeHttpTrigger',
-				message: 'Include an HTTP trigger?',
+				name: 'httpTrigger',
+				message: 'Is trigger connector?',
+				default: false,
+			},
+			{
+				type: 'confirm',
+				name: 'removeComments',
+				message: 'Remove comments from generated files?',
 				default: false,
 			},
 		]);
@@ -62,8 +73,21 @@ module.exports = class extends generators {
 		this.description = answers.description;
 		this.author = answers.author;
 		this.repository = answers.repository;
-		this.includeHttpTrigger = answers.includeHttpTrigger;
+		this.httpTrigger = answers.httpTrigger;
+		this.removeComments = answers.removeComments;
 	}
+
+	removeComments() {
+		if (this.removeComments) {
+			// Automatically remove all comments in javascript files using gulp
+			this.registerTransformStream([
+				jsFilter,
+				removeComments(),
+				jsFilter.restore,
+			]);
+		}
+	}
+
 	createPackage() {
 		this.fs.copyTpl(
 			this.templatePath('package.json'),
@@ -87,11 +111,6 @@ module.exports = class extends generators {
 			this.templatePath('_gitignore'),
 			this.destinationPath('.gitignore'),
 			{},
-		); // hack
-		this.fs.copyTpl(
-			this.templatePath('.travis.yml'),
-			this.destinationPath('.travis.yml'),
-			{},
 		);
 		this.fs.copyTpl(
 			this.templatePath('README.md'),
@@ -99,13 +118,6 @@ module.exports = class extends generators {
 			{
 				name: this.name,
 				description: this.description,
-			},
-		);
-		this.fs.copyTpl(
-			this.templatePath('toss.json'),
-			this.destinationPath('toss.json'),
-			{
-				service: this.service,
 			},
 		);
 	}
@@ -143,69 +155,12 @@ module.exports = class extends generators {
 			},
 		);
 	}
-	createConnectorsFolder() {}
 	createConnector() {
-		if (this.includeHttpTrigger) {
-			this.fs.copyTpl(
-				this.templatePath('trigger/connector.js'),
-				this.destinationPath(
-					'connectors/' + this.name + '/connector.js',
-				),
-				{
-					title: this.title,
-					name: this.name,
-					description: this.description,
-				},
-			);
-
-			this.fs.copyTpl(
-				this.templatePath('trigger/global_model.js'),
-				this.destinationPath(
-					'connectors/' + this.name + '/global_model.js',
-				),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath('trigger/global_schema.js'),
-				this.destinationPath(
-					'connectors/' + this.name + '/global_schema.js',
-				),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath('trigger/webhook/model.js'),
-				this.destinationPath(
-					'connectors/' + this.name + '/webhook/model.js',
-				),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath('trigger/webhook/schema.js'),
-				this.destinationPath(
-					'connectors/' + this.name + '/webhook/schema.js',
-				),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath('trigger/webhook/response.sample.json'),
-				this.destinationPath(
-					'connectors/' + this.name + '/webhook/response.sample.json',
-				),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath('trigger/webhook/request.js'),
-				this.destinationPath(
-					'connectors/' + this.name + '/webhook/request.js',
-				),
-				{},
-			);
-
-			return;
-		}
+		const templateFolder = this.httpTrigger ? 'trigger' : 'connector';
+		const operationFolder = this.httpTrigger ? 'webhook' : 'sample_message';
 
 		this.fs.copyTpl(
-			this.templatePath('connector/connector.js'),
+			this.templatePath(`${templateFolder}/connector.js`),
 			this.destinationPath('connectors/' + this.name + '/connector.js'),
 			{
 				title: this.title,
@@ -215,41 +170,63 @@ module.exports = class extends generators {
 		);
 
 		this.fs.copyTpl(
-			this.templatePath('connector/global_model.js'),
-			this.destinationPath(
-				'connectors/' + this.name + '/global_model.js',
-			),
+			this.templatePath(`${templateFolder}/global_model.js`),
+			this.destinationPath(`connectors/${this.name}/global_model.js`),
 			{},
 		);
+
 		this.fs.copyTpl(
-			this.templatePath('connector/global_schema.js'),
-			this.destinationPath(
-				'connectors/' + this.name + '/global_schema.js',
-			),
+			this.templatePath(`${templateFolder}/global_schema.js`),
+			this.destinationPath(`connectors/${this.name}/global_schema.js`),
 			{},
 		);
+
 		this.fs.copyTpl(
-			this.templatePath('connector/sample_message/model.js'),
+			this.templatePath(`${templateFolder}/${operationFolder}/model.js`),
 			this.destinationPath(
-				'connectors/' + this.name + '/sample_message/model.js',
+				`connectors/${this.name}/${operationFolder}/model.js`,
 			),
 			{},
 		);
+
 		this.fs.copyTpl(
-			this.templatePath('connector/sample_message/schema.js'),
+			this.templatePath(`${templateFolder}/${operationFolder}/schema.js`),
 			this.destinationPath(
-				'connectors/' + this.name + '/sample_message/schema.js',
+				`connectors/${this.name}/${operationFolder}/schema.js`,
 			),
 			{},
 		);
+
 		this.fs.copyTpl(
-			this.templatePath('connector/sample_message/response.sample.json'),
+			this.templatePath(
+				`${templateFolder}/${operationFolder}/response.sample.json`,
+			),
 			this.destinationPath(
-				'connectors/' +
-					this.name +
-					'/sample_message/response.sample.json',
+				`connectors/${this.name}/${operationFolder}/response.sample.json`,
 			),
 			{},
 		);
+
+		if (this.httpTrigger) {
+			// Copy over the request and destroy.js if it's a trigger connector.
+			this.fs.copyTpl(
+				this.templatePath(
+					`${templateFolder}/${operationFolder}/request.js`,
+				),
+				this.destinationPath(
+					`connectors/${this.name}/${operationFolder}/request.js`,
+				),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(
+					`${templateFolder}/${operationFolder}/destroy.js`,
+				),
+				this.destinationPath(
+					`connectors/${this.name}/${operationFolder}/destroy.js`,
+				),
+				{},
+			);
+		}
 	}
 };
