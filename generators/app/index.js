@@ -52,7 +52,6 @@ module.exports = class extends generators {
 				type: 'input',
 				name: 'repository',
 				message: 'Repository',
-				default: 'https://github.com/trayio/connectors.git',
 			},
 			{
 				type: 'confirm',
