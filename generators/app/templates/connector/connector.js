@@ -5,7 +5,6 @@
  */
 
 module.exports = {
-
 	// The name of the connector is the folder name
 
 	// The title
@@ -24,7 +23,6 @@ module.exports = {
 	// Icon of the connector.
 	icon: {
 		type: 'url',
-		value: '//s3.amazonaws.com/images.tray.io/static/icons/<%= name %>.png'
-	}
-
+		value: '//s3.amazonaws.com/images.tray.io/static/icons/<%= name %>.png',
+	},
 };

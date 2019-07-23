@@ -4,14 +4,10 @@
 */
 
 module.exports = {
-
 	title: 'Sample message',
 
 	description: 'Just a sample message.',
 
 	// Input schema config
-	input: {
-
-	}
-
+	input: {},
 };
