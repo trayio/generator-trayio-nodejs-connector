@@ -13,6 +13,6 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "mout": "^1.1.0",
-    "yeoman-generator": "^0.21.2"
+    "yeoman-generator": "^4.0.1"
   }
 }

@@ -5,101 +5,59 @@ var sentenceCase = require('mout/string/sentenceCase');
 
 var OPERATION_FOLDER = "operations";
 
-module.exports = generators.Base.extend({
-	constructor: function() {
-		generators.Base.apply(this, arguments);
+module.exports = class extends generators {
+	constructor(args, opts) {
+		super(args, opts);
 		this.connectorName = process.cwd().split(path.sep).pop();
-	},
-	promptProjectTitle: function() {
-		var done = this.async();
-		this.prompt({
+	}
+	async prompting() {
+		const titleAnswer = await this.prompt({
 			type: 'input',
 			name: 'title',
 			message: 'Connector title (as it will appear in the tray UI)',
 			default: sentenceCase(this.appname) // Default to current folder name
-		}, function(answers) {
-			this.log(answers.title);
-			this.title = answers.title;
-			done();
-		}.bind(this));
-	},
-	promptProjectName: function() {
-		var done = this.async();
-		this.prompt({
-			type: 'input',
-			name: 'name',
-			message: 'Connector name (how it will be referenced in workflows)',
-			default: slugify(this.title) // Default to current folder name
-		}, function(answers) {
-			this.log(answers.name);
-			this.name = answers.name;
-			done();
-		}.bind(this));
-	},
-	promptServiceName: function () {
-		var done = this.async();
-		this.prompt({
-			type: 'input',
-			name: 'service',
-			message: 'Service name (the app the connector will be tied to)',
-			default: this.name // Default to current folder name
-		}, function(answers) {
-			this.log(answers.service);
-			this.service = answers.service;
-			done();
-		}.bind(this));
-	},
-	promptProjectDescription: function() {
-		var done = this.async();
-		this.prompt({
-			type: 'input',
-			name: 'description',
-			message: 'Description'
-		}, function(answers) {
-			this.log(answers.description);
-			this.description = answers.description;
-			done();
-		}.bind(this));
-	},
-	promptAuthor: function() {
-		var done = this.async();
-		this.prompt({
-			type: 'input',
-			name: 'author',
-			message: 'Author',
-			default: 'tray.io'
-		}, function(answers) {
-			this.log(answers.author);
-			this.author = answers.author;
-			done();
-		}.bind(this));
-	},
-	promptRepo: function() {
-		var done = this.async();
-		this.prompt({
-			type: 'input',
-			name: 'repository',
-			message: 'Repository'
-		}, function(answers) {
-			this.log(answers.repository);
-			this.repository = answers.repository;
-			done();
-		}.bind(this));
-	},
-	promptIncludeHttpTrigger: function() {
-		var done = this.async();
-		this.prompt({
-			type: 'confirm',
-			name: 'httpTrigger',
-			message: 'Include an HTTP trigger?',
-			default: false
-		}, function(answers) {
-			this.log(answers.httpTrigger);
-			this.includeHttpTrigger = answers.httpTrigger;
-			done();
-		}.bind(this));
-	},
-	createPackage: function() {
+		})
+		const title = titleAnswer.title;
+		const answers = await this.prompt([
+			{
+				type: 'input',
+				name: 'name',
+				message: 'Connector name (how it will be referenced in workflows)',
+				default: slugify(title) // Default to current folder name
+			},
+			{
+				type: 'input',
+				name: 'service',
+				message: 'Service name (the app the connector will be tied to)',
+				default: slugify(title) // Default to current folder name
+			},
+			{
+				type: 'input',
+				name: 'description',
+				message: 'Description'
+			},
+			{
+				type: 'input',
+				name: 'author',
+				message: 'Author',
+				default: 'tray.io'
+			},
+			{
+				type: 'input',
+				name: 'repository',
+				message: 'Repository'
+			},
+		])
+		console.log(answers);
+		this.title = title;
+		this.name = answers.name;
+		this.service = answers.service;
+		this.description = answers.description;
+		this.author = answers.author;
+		this.repository = answers.repository;
+	}
+	createPackage() {
+		console.log('packages');
 		this.fs.copyTpl(
 			this.templatePath("package.json"),
 			this.destinationPath("package.json"), {
@@ -109,30 +67,27 @@ module.exports = generators.Base.extend({
 				repository: this.repository
 			}
 		);
-	},
-	copyFiles: function() {
+	}
+	copyFiles() {
+		console.log('copy');
 
 		//copy .files
 		this.fs.copyTpl(this.templatePath(".editorconfig"), this.destinationPath(".editorconfig"), {});
 		this.fs.copyTpl(this.templatePath("_gitignore"), this.destinationPath(".gitignore"), {}); // hack
-		this.fs.copyTpl(this.templatePath(".jsinspectrc"), this.destinationPath(".jsinspectrc"), {});
 		this.fs.copyTpl(this.templatePath(".travis.yml"), this.destinationPath(".travis.yml"), {});
-		this.fs.copyTpl(this.templatePath("Gruntfile.js"), this.destinationPath("Gruntfile.js"), {});
-
 		this.fs.copyTpl(this.templatePath("README.md"), this.destinationPath("README.md"), {
 			name: this.name,
 			description: this.description,
 		});
-		this.fs.copyTpl(this.templatePath("yart_run.sh"), this.destinationPath("yart_run.sh"), {});
 		this.fs.copyTpl(this.templatePath("toss.json"), this.destinationPath("toss.json"), {
 			service: this.service
 		});
 
-	},
-	createConnectorJSON: function() {
+	}
+	createConnectorJSON() {
 		this.fs.write(this.destinationPath("connectors.json"), JSON.stringify([]));
-	},
-	installSDKDependency: function() {
+	}
+	installSDKDependency() {
 		this.npmInstall(
 			[
 				'@trayio/falafel'
@@ -141,17 +96,14 @@ module.exports = generators.Base.extend({
 				'save': true
 			}
 		);
-	},
-	installGruntDependency: function() {
+	}
+	installDevDependency() {
 		this.npmInstall(
 			[
 				'prettier',
 				'eslint',
 				'eslint-config-prettier',
 				'eslint-plugin-prettier',
-				'grunt',
-				'grunt-contrib-jshint',
-				'grunt-contrib-watch',
 				'generate-schema',
 				'body-parser',
 				'express'
@@ -160,16 +112,16 @@ module.exports = generators.Base.extend({
 				'saveDev': true
 			}
 		);
-	},
-	createMain: function() {
+	}
+	createMain() {
 		this.fs.copyTpl(
 			this.templatePath("main.js"),
 			this.destinationPath("main.js"), {
 				title: this.title
 			}
 		);
-	},
-	createConnectorsFolder: function() {
+	}
+	createConnectorsFolder() {
 		this.fs.copyTpl(this.templatePath("connector/connector.js"), this.destinationPath('connectors/' + this.name + '/connector.js'), {
 			title: this.title,
 			name: this.name,
@@ -178,12 +130,8 @@ module.exports = generators.Base.extend({
 
 		this.fs.copyTpl(this.templatePath('connector/global_model.js'), this.destinationPath('connectors/' + this.name + '/global_model.js'), {});
 		this.fs.copyTpl(this.templatePath('connector/global_schema.js'), this.destinationPath('connectors/' + this.name + '/global_schema.js'), {});
-
-		if (this.includeHttpTrigger) {
-			this.fs.copyTpl(this.templatePath('connector/trigger.js'), this.destinationPath('connectors/' + this.name + '/trigger.js'), {});
-		}
-	},
-	createSampleMessage: function() {
+	}
+	createSampleMessage() {
 		this.fs.copyTpl(
 			this.templatePath('connector/sample_message/model.js'),
 			this.destinationPath('connectors/' + this.name + '/sample_message/model.js'), {}
@@ -197,4 +145,4 @@ module.exports = generators.Base.extend({
 			this.destinationPath('connectors/' + this.name + '/sample_message/response.sample.json'), {}
 		);
 	}
-});
+}
