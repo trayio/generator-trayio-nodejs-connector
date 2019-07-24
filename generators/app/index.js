@@ -138,6 +138,7 @@ module.exports = class extends generators {
 				'eslint',
 				'eslint-config-prettier',
 				'eslint-plugin-prettier',
+				'eslint-plugin-jest',
 				'express',
 			],
 			{
