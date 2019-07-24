@@ -23,19 +23,21 @@ module.exports = class extends generators {
 			default: sentenceCase(this.appname), // Default to current folder name
 		});
 		const title = titleAnswer.title;
+
+		const nameAnswer = await this.prompt({
+			type: 'input',
+			name: 'name',
+			message: 'Connector name (how it will be referenced in workflows)',
+			default: slugify(title), // Default to current folder name
+		});
+		const name = nameAnswer.name;
+
 		const answers = await this.prompt([
-			{
-				type: 'input',
-				name: 'name',
-				message:
-					'Connector name (how it will be referenced in workflows)',
-				default: slugify(title), // Default to current folder name
-			},
 			{
 				type: 'input',
 				name: 'service',
 				message: 'Service name (the app the connector will be tied to)',
-				default: title, // Default to current folder name
+				default: name, // Default to current folder name
 			},
 			{
 				type: 'input',
@@ -67,7 +69,7 @@ module.exports = class extends generators {
 			},
 		]);
 		this.title = title;
-		this.name = answers.name;
+		this.name = name;
 		this.service = answers.service;
 		this.description = answers.description;
 		this.author = answers.author;
