@@ -28,7 +28,7 @@ module.exports = class extends generators {
 			type: 'input',
 			name: 'name',
 			message: 'Connector name (how it will be referenced in workflows)',
-			default: slugify(title), // Default to current folder name
+			default: slugify(title), // Default to connector title
 		});
 		const name = nameAnswer.name;
 
@@ -37,7 +37,7 @@ module.exports = class extends generators {
 				type: 'input',
 				name: 'service',
 				message: 'Service name (the app the connector will be tied to)',
-				default: name, // Default to current folder name
+				default: name, // Default to current connector name
 			},
 			{
 				type: 'input',
