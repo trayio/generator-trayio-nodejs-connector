@@ -5,6 +5,5 @@
 module.exports = {
 	method: 'get',
 
-	url:
-		'https://s3-eu-west-1.amazonaws.com/static.tray.io/connectors/falafel/response.sample.json',
+	url: `https://s3-eu-west-1.amazonaws.com/static.tray.io/connectors/falafel/response.sample.json`,
 };
