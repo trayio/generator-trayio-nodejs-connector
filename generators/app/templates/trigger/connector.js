@@ -2,7 +2,9 @@
  * High level basic configuration for the connector.
  *
  * Documentation: https://github.com/trayio/falafel#connector-file
+ * Trigger Documentation: https://github.com/trayio/falafel#trigger-connectors
  */
+
 module.exports = {
 	// The name of the connector is the folder name
 
@@ -22,6 +24,7 @@ module.exports = {
 	// Icon of the connector.
 	icon: {
 		type: 'url',
-		value: '//s3.amazonaws.com/images.tray.io/artisan/icons/<%= name %>.png',
+		value:
+			'//s3.amazonaws.com/images.tray.io/artisan/icons/<%= name %>.png',
 	},
 };
