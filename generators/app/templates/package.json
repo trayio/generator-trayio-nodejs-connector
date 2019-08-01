@@ -6,7 +6,7 @@
   },
   "scripts": {
     "start": "node-dev main.js",
-    "lint": "./node_modules/.bin/eslint -f unix ."
+    "lint": "./node_modules/.bin/eslint -f unix . --fix"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
