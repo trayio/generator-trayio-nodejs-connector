@@ -67,6 +67,12 @@ module.exports = class extends generators {
 				message: 'Remove comments from generated files?',
 				default: false,
 			},
+			{
+				type: 'confirm',
+				name: 'addJestFolders',
+				message: 'Add Jest testing folders?',
+				default: false,
+			},
 		]);
 		this.title = title;
 		this.name = name;
@@ -76,6 +82,49 @@ module.exports = class extends generators {
 		this.repository = answers.repository;
 		this.httpTrigger = answers.httpTrigger;
 		this.removeComments = answers.removeComments;
+		this.addJestFolders = answers.addJestFolders;
+	}
+
+	addJestFolders() {
+		if (this.addJestFolders) {
+			// adding jest dependencies
+			this.npmInstall(
+				[
+					'jest',
+					'jest-json-schema',
+					'jest-json-schema-extended',
+					'nock',
+				],
+				{
+					saveDev: true,
+				},
+			);
+			this.fs.copyTpl(
+				this.templatePath('jest.config.js'),
+				this.destinationPath('jest.config.js'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/helpers/sample.test.js`),
+				this.destinationPath('tests/unit/helpers/sample.test.js'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/operations/sample.test.js`),
+				this.destinationPath('tests/unit/operations/sample.test.js'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/utils/general.js`),
+				this.destinationPath('tests/utils/general.js'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/jestSetup.js`),
+				this.destinationPath('tests/jestSetup.js'),
+				{},
+			);
+		}
 	}
 
 	removeComments() {
