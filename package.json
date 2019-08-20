@@ -1,6 +1,6 @@
 {
 	"name": "generator-trayio-nodejs-connector",
-	"version": "2.0.1",
+	"version": "2.1.1",
 	"description": "Yeoman generator for creating Node.js connectors for the tray.io platform",
 	"files": [
 		"generators/app"

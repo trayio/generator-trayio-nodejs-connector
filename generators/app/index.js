@@ -88,15 +88,17 @@ module.exports = class extends generators {
 	addJestFolders() {
 		if (this.addJestFolders) {
 			// adding jest dependencies
-			this.npmInstall([
-				'jest',
-				'jest-json-schema',
-				'jest-json-schema-extended',
-				'nock'
-			], 
-			{
-				saveDev: true
-			});
+			this.npmInstall(
+				[
+					'jest',
+					'jest-json-schema',
+					'jest-json-schema-extended',
+					'nock',
+				],
+				{
+					saveDev: true,
+				},
+			);
 			this.fs.copyTpl(
 				this.templatePath('jest.config.js'),
 				this.destinationPath('jest.config.js'),
