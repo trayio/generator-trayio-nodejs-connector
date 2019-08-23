@@ -71,7 +71,7 @@ module.exports = class extends generators {
 				type: 'confirm',
 				name: 'addJestFolders',
 				message: 'Add Jest testing folders?',
-				default: false,
+				default: true,
 			},
 		]);
 		this.title = title;
@@ -83,11 +83,11 @@ module.exports = class extends generators {
 		this.httpTrigger = answers.httpTrigger;
 		this.removeComments = answers.removeComments;
 		this.addJestFolders = answers.addJestFolders;
+		this.addIntegrationTest = answers.addIntegrationTest;
 	}
 
 	addJestFolders() {
 		if (this.addJestFolders) {
-			// adding jest dependencies
 			this.npmInstall(
 				[
 					'jest',
@@ -105,23 +105,35 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(`tests/unit/helpers/sample.test.js`),
-				this.destinationPath('tests/unit/helpers/sample.test.js'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/sample.test.js`),
-				this.destinationPath('tests/unit/operations/sample.test.js'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/utils/general.js`),
-				this.destinationPath('tests/utils/general.js'),
+				this.templatePath(
+					`tests/unit/operations/sample_message.test.js`,
+				),
+				this.destinationPath(
+					'tests/unit/operations/sample_message.test.js',
+				),
 				{},
 			);
 			this.fs.copyTpl(
 				this.templatePath(`tests/jestSetup.js`),
 				this.destinationPath('tests/jestSetup.js'),
+				{},
+			);
+		}
+	}
+
+	addIntegrationTest() {
+		if (this.addIntegrationTest) {
+			this.npmInstall(['dotenv'], {
+				saveDev: true,
+			});
+			this.fs.copyTpl(
+				this.templatePath('.env'),
+				this.destinationPath('.env'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath('tests/integration/integration.test.js'),
+				this.destinationPath('tests/integration/integration.test.js'),
 				{},
 			);
 		}
@@ -139,8 +151,12 @@ module.exports = class extends generators {
 	}
 
 	createPackage() {
+		const packagePath = this.addJestFolders
+			? 'package_with_scripts.json'
+			: 'package.json';
+
 		this.fs.copyTpl(
-			this.templatePath('package.json'),
+			this.templatePath(packagePath),
 			this.destinationPath('package.json'),
 			{
 				name: this.connectorName,
@@ -151,15 +167,9 @@ module.exports = class extends generators {
 		);
 	}
 	copyFiles() {
-		//copy .files
 		this.fs.copyTpl(
 			this.templatePath('.editorconfig'),
 			this.destinationPath('.editorconfig'),
-			{},
-		);
-		this.fs.copyTpl(
-			this.templatePath('_gitignore'),
-			this.destinationPath('.gitignore'),
 			{},
 		);
 		this.fs.copyTpl(
@@ -191,6 +201,7 @@ module.exports = class extends generators {
 				'eslint-plugin-prettier',
 				'eslint-plugin-jest',
 				'express',
+				'node-dev',
 			],
 			{
 				saveDev: true,

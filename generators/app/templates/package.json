@@ -2,19 +2,17 @@
   "name": "<%= name %>",
   "description": "<%= description %>",
   "version": "0.0.1",
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "start": "node-dev main.js",
-    "lint": "./node_modules/.bin/eslint -f unix . --fix"
+    "lint": "eslint ./ --fix"
   },
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
   },
   "author": "<%= author %>",
   "license": "ISC",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "<%= repository %>"

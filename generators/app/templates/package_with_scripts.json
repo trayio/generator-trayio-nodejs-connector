@@ -1,0 +1,28 @@
+{
+	"name": "<%= name %>",
+	"description": "<%= description %>",
+	"version": "0.0.1",
+	"dependencies": {},
+	"scripts": {
+		"start": "node-dev main.js",
+		"lint": "eslint ./ --fix",
+		"pretest": "npm run lint",
+		"test": "jest tests/unit",
+		"test:integration": "jest tests/integration",
+		"test:watch": "jest tests/unit --watch --notify",
+		"coverage": "jest --coverage"
+	},
+	"publishConfig": {
+		"registry": "http://registry.npmjs.org"
+	},
+	"author": "<%= author %>",
+	"license": "ISC",
+	"devDependencies": {},
+	"repository": {
+		"type": "git",
+		"url": "<%= repository %>"
+	},
+	"engines": {
+		"node": "8.10.0"
+	}
+}
