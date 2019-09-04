@@ -8,9 +8,10 @@ describe('sampleMessage', () => {
 		};
 		//This will make an outbound API call
 		it('Should return a successful response', () => {
-			falafel.connector.operation(input).then(output => {
+			return falafel.connector.operation(input).then(output => {
 				expect(output.body).toEqual({
-					foo: 'bar',
+					result:
+						'This is a sample of the response you expect from this message API call. Used for the output schema. Replace this with your own sample JSON.',
 				});
 			});
 		});

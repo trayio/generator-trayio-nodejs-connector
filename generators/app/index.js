@@ -69,9 +69,15 @@ module.exports = class extends generators {
 			},
 			{
 				type: 'confirm',
-				name: 'addJestFolders',
-				message: 'Add Jest testing folders?',
+				name: 'addUnitTesting',
+				message: 'Add unit testing?',
 				default: true,
+			},
+			{
+				type: 'confirm',
+				name: 'addIntegrationTesting',
+				message: 'Add integration testing?',
+				default: false,
 			},
 		]);
 		this.title = title;
@@ -82,17 +88,18 @@ module.exports = class extends generators {
 		this.repository = answers.repository;
 		this.httpTrigger = answers.httpTrigger;
 		this.removeComments = answers.removeComments;
-		this.addJestFolders = answers.addJestFolders;
-		this.addIntegrationTest = answers.addIntegrationTest;
+		this.addUnitTesting = answers.addUnitTesting;
+		this.addIntegrationTesting = answers.addIntegrationTesting;
 	}
 
-	addJestFolders() {
-		if (this.addJestFolders) {
+	addUnitTesting() {
+		if (this.addUnitTesting) {
 			this.npmInstall(
 				[
 					'jest',
 					'jest-json-schema',
 					'jest-json-schema-extended',
+					'@trayio/connector-test-runner',
 					'nock',
 				],
 				{
@@ -105,24 +112,27 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(
-					`tests/unit/operations/sample_message.test.js`,
-				),
-				this.destinationPath(
-					'tests/unit/operations/sample_message.test.js',
-				),
+				this.templatePath(`tests/jestSetup.js`),
+				this.destinationPath('tests/jestSetup.js'),
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(`tests/jestSetup.js`),
-				this.destinationPath('tests/jestSetup.js'),
+				this.templatePath(`tests/unit/operations/config.js`),
+				this.destinationPath(`tests/unit/operations/config.js`),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/operations/operations.test.js`),
+				this.destinationPath(
+					`tests/unit/operations/operations.test.js`,
+				),
 				{},
 			);
 		}
 	}
 
-	addIntegrationTest() {
-		if (this.addIntegrationTest) {
+	addIntegrationTesting() {
+		if (this.addIntegrationTesting) {
 			this.npmInstall(['dotenv'], {
 				saveDev: true,
 			});
@@ -132,8 +142,10 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath('tests/integration/integration.test.js'),
-				this.destinationPath('tests/integration/integration.test.js'),
+				this.templatePath('tests/integration/sample_message.test.js'),
+				this.destinationPath(
+					'tests/integration/sample_message.test.js',
+				),
 				{},
 			);
 		}
@@ -151,7 +163,7 @@ module.exports = class extends generators {
 	}
 
 	createPackage() {
-		const packagePath = this.addJestFolders
+		const packagePath = this.addUnitTesting
 			? 'package_with_scripts.json'
 			: 'package.json';
 
