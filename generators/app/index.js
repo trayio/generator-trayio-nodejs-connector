@@ -79,6 +79,12 @@ module.exports = class extends generators {
 				message: 'Add integration testing?',
 				default: false,
 			},
+			{
+				type: 'confirm',
+				name: 'addTestRunner',
+				message: 'Add connector test runner?',
+				default: false,
+			},
 		]);
 		this.title = title;
 		this.name = name;
@@ -90,6 +96,7 @@ module.exports = class extends generators {
 		this.removeComments = answers.removeComments;
 		this.addUnitTesting = answers.addUnitTesting;
 		this.addIntegrationTesting = answers.addIntegrationTesting;
+		this.addTestRunner = answers.addTestRunner;
 	}
 
 	addUnitTesting() {
@@ -118,14 +125,11 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/config.js`),
-				this.destinationPath(`tests/unit/operations/config.js`),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/operations.test.js`),
+				this.templatePath(
+					`tests/unit/operations/sample_message.test.js`,
+				),
 				this.destinationPath(
-					`tests/unit/operations/operations.test.js`,
+					'tests/unit/operations/sample_message.test.js',
 				),
 				{},
 			);
@@ -143,6 +147,26 @@ module.exports = class extends generators {
 				this.templatePath('tests/integration/sample_message.test.js'),
 				this.destinationPath(
 					'tests/integration/sample_message.test.js',
+				),
+				{},
+			);
+		}
+	}
+
+	addTestRunner() {
+		if (this.addTestRunner) {
+			this.npmInstall(['@trayio/connector-test-runner'], {
+				saveDev: true,
+			});
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/operations/config.js`),
+				this.destinationPath(`tests/unit/operations/config.js`),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/operations/operations.test.js`),
+				this.destinationPath(
+					`tests/unit/operations/operations.test.js`,
 				),
 				{},
 			);
