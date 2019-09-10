@@ -1,4 +1,3 @@
-require('dotenv').config(); //Inject environment variables
 describe('sampleMessage', () => {
 	describe('Given input', () => {
 		const input = {

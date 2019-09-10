@@ -101,6 +101,7 @@ module.exports = class extends generators {
 					'jest-json-schema-extended',
 					'@trayio/connector-test-runner',
 					'nock',
+					'dotenv',
 				],
 				{
 					saveDev: true,
@@ -133,9 +134,6 @@ module.exports = class extends generators {
 
 	addIntegrationTesting() {
 		if (this.addIntegrationTesting) {
-			this.npmInstall(['dotenv'], {
-				saveDev: true,
-			});
 			this.fs.copyTpl(
 				this.templatePath('.env'),
 				this.destinationPath('.env'),
@@ -163,12 +161,8 @@ module.exports = class extends generators {
 	}
 
 	createPackage() {
-		const packagePath = this.addUnitTesting
-			? 'package_with_scripts.json'
-			: 'package.json';
-
 		this.fs.copyTpl(
-			this.templatePath(packagePath),
+			this.templatePath('package.json'),
 			this.destinationPath('package.json'),
 			{
 				name: this.connectorName,
