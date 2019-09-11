@@ -106,7 +106,6 @@ module.exports = class extends generators {
 					'jest',
 					'jest-json-schema',
 					'jest-json-schema-extended',
-					'@trayio/connector-test-runner',
 					'nock',
 					'dotenv',
 				],
