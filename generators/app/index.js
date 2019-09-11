@@ -248,7 +248,9 @@ module.exports = class extends generators {
 	}
 	createConnector() {
 		const templateFolder = this.httpTrigger ? 'trigger' : 'connector';
-		const operationFolder = this.httpTrigger ? 'webhook' : 'sample_message';
+		const operationFolder = this.httpTrigger
+			? 'webhook'
+			: 'sample_operation';
 
 		this.fs.copyTpl(
 			this.templatePath(`${templateFolder}/connector.js`),
