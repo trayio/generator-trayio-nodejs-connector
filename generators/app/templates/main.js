@@ -1,4 +1,3 @@
-require('dotenv').config(); //Inject environment variables
 var Falafel = require('@trayio/falafel');
 // Set up the lambda function by wrapping the current directory
 var apptalk = new Falafel().wrap({
