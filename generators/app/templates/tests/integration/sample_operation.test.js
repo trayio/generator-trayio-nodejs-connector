@@ -1,4 +1,4 @@
-describe('sampleMessage', () => {
+describe('sampleOperation', () => {
 	describe('Given input', () => {
 		const input = {
 			'#auth': {

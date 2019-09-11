@@ -1,5 +1,5 @@
 const nock = require('nock');
-describe('sampleMessage', () => {
+describe('sampleOperation', () => {
 	describe('Given input params', () => {
 		//This is the input you receive from the UI
 		const input = {

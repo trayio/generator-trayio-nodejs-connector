@@ -125,10 +125,10 @@ module.exports = class extends generators {
 			);
 			this.fs.copyTpl(
 				this.templatePath(
-					`tests/unit/operations/sample_message.test.js`,
+					`tests/unit/operations/sample_operation.test.js`,
 				),
 				this.destinationPath(
-					'tests/unit/operations/sample_message.test.js',
+					'tests/unit/operations/sample_operation.test.js',
 				),
 				{},
 			);
@@ -143,9 +143,9 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath('tests/integration/sample_message.test.js'),
+				this.templatePath('tests/integration/sample_operation.test.js'),
 				this.destinationPath(
-					'tests/integration/sample_message.test.js',
+					'tests/integration/sample_operation.test.js',
 				),
 				{},
 			);
