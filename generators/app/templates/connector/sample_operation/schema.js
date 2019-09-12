@@ -3,9 +3,9 @@
 	Documentation: https://github.com/trayio/falafel#schema
 */
 module.exports = {
-	title: 'Sample message',
+	title: 'Sample operation',
 
-	description: 'Just a sample message.',
+	description: 'Just a sample operation.',
 
 	// Input schema config
 	input: {},

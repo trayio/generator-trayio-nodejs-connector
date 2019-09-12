@@ -69,8 +69,20 @@ module.exports = class extends generators {
 			},
 			{
 				type: 'confirm',
-				name: 'addJestFolders',
-				message: 'Add Jest testing folders?',
+				name: 'addUnitTesting',
+				message: 'Add unit testing?',
+				default: true,
+			},
+			{
+				type: 'confirm',
+				name: 'addIntegrationTesting',
+				message: 'Add integration testing?',
+				default: false,
+			},
+			{
+				type: 'confirm',
+				name: 'addTestRunner',
+				message: 'Add connector test runner?',
 				default: false,
 			},
 		]);
@@ -82,18 +94,20 @@ module.exports = class extends generators {
 		this.repository = answers.repository;
 		this.httpTrigger = answers.httpTrigger;
 		this.removeComments = answers.removeComments;
-		this.addJestFolders = answers.addJestFolders;
+		this.addUnitTesting = answers.addUnitTesting;
+		this.addIntegrationTesting = answers.addIntegrationTesting;
+		this.addTestRunner = answers.addTestRunner;
 	}
 
-	addJestFolders() {
-		if (this.addJestFolders) {
-			// adding jest dependencies
+	addUnitTesting() {
+		if (this.addUnitTesting) {
 			this.npmInstall(
 				[
 					'jest',
 					'jest-json-schema',
 					'jest-json-schema-extended',
 					'nock',
+					'dotenv',
 				],
 				{
 					saveDev: true,
@@ -105,23 +119,54 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(`tests/unit/helpers/sample.test.js`),
-				this.destinationPath('tests/unit/helpers/sample.test.js'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/sample.test.js`),
-				this.destinationPath('tests/unit/operations/sample.test.js'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/utils/general.js`),
-				this.destinationPath('tests/utils/general.js'),
-				{},
-			);
-			this.fs.copyTpl(
 				this.templatePath(`tests/jestSetup.js`),
 				this.destinationPath('tests/jestSetup.js'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(
+					`tests/unit/operations/sample_operation.test.js`,
+				),
+				this.destinationPath(
+					'tests/unit/operations/sample_operation.test.js',
+				),
+				{},
+			);
+		}
+	}
+
+	addIntegrationTesting() {
+		if (this.addIntegrationTesting) {
+			this.fs.copyTpl(
+				this.templatePath('.env'),
+				this.destinationPath('.env'),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath('tests/integration/sample_operation.test.js'),
+				this.destinationPath(
+					'tests/integration/sample_operation.test.js',
+				),
+				{},
+			);
+		}
+	}
+
+	addTestRunner() {
+		if (this.addTestRunner) {
+			this.npmInstall(['@trayio/connector-test-runner'], {
+				saveDev: true,
+			});
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/operations/config.js`),
+				this.destinationPath(`tests/unit/operations/config.js`),
+				{},
+			);
+			this.fs.copyTpl(
+				this.templatePath(`tests/unit/operations/operations.test.js`),
+				this.destinationPath(
+					`tests/unit/operations/operations.test.js`,
+				),
 				{},
 			);
 		}
@@ -151,15 +196,9 @@ module.exports = class extends generators {
 		);
 	}
 	copyFiles() {
-		//copy .files
 		this.fs.copyTpl(
 			this.templatePath('.editorconfig'),
 			this.destinationPath('.editorconfig'),
-			{},
-		);
-		this.fs.copyTpl(
-			this.templatePath('_gitignore'),
-			this.destinationPath('.gitignore'),
 			{},
 		);
 		this.fs.copyTpl(
@@ -191,6 +230,7 @@ module.exports = class extends generators {
 				'eslint-plugin-prettier',
 				'eslint-plugin-jest',
 				'express',
+				'node-dev',
 			],
 			{
 				saveDev: true,
@@ -208,7 +248,9 @@ module.exports = class extends generators {
 	}
 	createConnector() {
 		const templateFolder = this.httpTrigger ? 'trigger' : 'connector';
-		const operationFolder = this.httpTrigger ? 'webhook' : 'sample_message';
+		const operationFolder = this.httpTrigger
+			? 'webhook'
+			: 'sample_operation';
 
 		this.fs.copyTpl(
 			this.templatePath(`${templateFolder}/connector.js`),
