@@ -101,26 +101,17 @@ module.exports = class extends generators {
 
 	addUnitTesting() {
 		if (this.addUnitTesting) {
-			this.npmInstall(
-				[
-					'jest',
-					'jest-json-schema',
-					'jest-json-schema-extended',
-					'nock',
-					'dotenv',
-				],
-				{
-					saveDev: true,
-				},
-			);
+			this.npmInstall(['jest', 'nock', 'dotenv'], {
+				saveDev: true,
+			});
 			this.fs.copyTpl(
 				this.templatePath('jest.config.js'),
 				this.destinationPath('jest.config.js'),
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(`tests/jestSetup.js`),
-				this.destinationPath('tests/jestSetup.js'),
+				this.templatePath(`tests/setup.js`),
+				this.destinationPath('tests/setup.js'),
 				{},
 			);
 			this.fs.copyTpl(
@@ -158,8 +149,8 @@ module.exports = class extends generators {
 				saveDev: true,
 			});
 			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/config.js`),
-				this.destinationPath(`tests/unit/operations/config.js`),
+				this.templatePath(`tests/unit/operations/globalConfig.js`),
+				this.destinationPath(`tests/unit/operations/globalConfig.js`),
 				{},
 			);
 			this.fs.copyTpl(

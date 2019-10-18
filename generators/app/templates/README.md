@@ -1,3 +1,1 @@
-# <%= name %> tray.io connector
-
-<%= description %>
+[Link to the API docs](#)

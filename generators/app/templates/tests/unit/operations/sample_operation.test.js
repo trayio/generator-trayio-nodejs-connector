@@ -1,3 +1,4 @@
+// This is an example of a test that does not use the connector-test-runner package.
 const nock = require('nock');
 describe('sampleOperation', () => {
 	describe('Given input params', () => {

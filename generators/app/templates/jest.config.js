@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test.
-	setupFilesAfterEnv: [path.join(__dirname, 'tests/jestSetup.js')],
+	setupFilesAfterEnv: [path.join(__dirname, 'tests/setup.js')],
 
 	// Automatically clear mock calls and instances between every test
 	clearMocks: true,
@@ -20,4 +20,7 @@ module.exports = {
 
 	// Indicates whether each individual test should be reported during the run
 	verbose: true,
+
+	// Ignores coverage information for test files
+	coveragePathIgnorePatterns: [, '/tests/']
 };
