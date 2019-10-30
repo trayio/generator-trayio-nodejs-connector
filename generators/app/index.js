@@ -110,8 +110,8 @@ module.exports = class extends generators {
 				{},
 			);
 			this.fs.copyTpl(
-				this.templatePath(`tests/jestsetup.js`),
-				this.destinationPath('tests/jestsetup.js'),
+				this.templatePath(`tests/setup.js`),
+				this.destinationPath('tests/setup.js'),
 				{},
 			);
 			this.fs.copyTpl(
