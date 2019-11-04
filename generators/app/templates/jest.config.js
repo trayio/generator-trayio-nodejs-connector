@@ -22,5 +22,5 @@ module.exports = {
 	verbose: true,
 
 	// Ignores coverage information for test files
-	coveragePathIgnorePatterns: [, '/tests/']
+	coveragePathIgnorePatterns: ['/tests/'],
 };
