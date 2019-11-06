@@ -250,7 +250,7 @@ module.exports = class extends generators {
 
 		this.fs.copyTpl(
 			this.templatePath(`${templateFolder}/connector.js`),
-			this.destinationPath('connectors/' + this.name + '/connector.js'),
+			this.destinationPath(`connectors/${this.name}/connector.js`),
 			{
 				title: this.title,
 				name: this.name,
