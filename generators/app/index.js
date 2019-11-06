@@ -215,7 +215,7 @@ module.exports = class extends generators {
 	installConnectorUtils() {
 		this.npmInstall(['@trayio/connector-utils'], {
 			save: true,
-		})
+		});
 	}
 	installDevDependency() {
 		this.npmInstall(
