@@ -22,6 +22,7 @@ module.exports = {
 	// Icon of the connector.
 	icon: {
 		type: 'url',
-		value: '//s3.amazonaws.com/images.tray.io/artisan/icons/<%= name %>.png',
+		value:
+			'//s3.amazonaws.com/images.tray.io/artisan/icons/<%= name %>.png',
 	},
 };
