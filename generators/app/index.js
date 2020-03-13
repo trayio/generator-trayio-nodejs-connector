@@ -220,11 +220,6 @@ module.exports = class extends generators {
 	installDevDependency() {
 		this.npmInstall(
 			[
-				'prettier',
-				'eslint',
-				'eslint-config-prettier',
-				'eslint-plugin-prettier',
-				'eslint-plugin-jest',
 				'express',
 				'node-dev',
 			],

@@ -1,6 +1,6 @@
 {
     "name": "generator-trayio-nodejs-connector",
-    "version": "2.2.5",
+    "version": "2.2.6",
     "description": "Yeoman generator for creating Node.js connectors for the tray.io platform",
     "files": [
         "generators/app"
@@ -18,11 +18,6 @@
         "yeoman-generator": "^4.0.1"
     },
     "devDependencies": {
-        "@types/lodash": "^4.14.144",
-        "eslint": "^6.1.0",
-        "eslint-config-prettier": "^6.0.0",
-        "eslint-plugin-jest": "^22.16.0",
-        "eslint-plugin-prettier": "^3.1.0",
-        "prettier": "^1.18.2"
+        "@types/lodash": "^4.14.144"
     }
 }
