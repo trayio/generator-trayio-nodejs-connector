@@ -71,7 +71,7 @@ module.exports = class extends generators {
 				type: 'confirm',
 				name: 'addUnitTesting',
 				message: 'Add unit testing?',
-				default: true,
+				default: false,
 			},
 			{
 				type: 'confirm',
@@ -83,7 +83,7 @@ module.exports = class extends generators {
 				type: 'confirm',
 				name: 'addTestRunner',
 				message: 'Add connector test runner?',
-				default: false,
+				default: true,
 			},
 		]);
 		this.title = title;
@@ -220,11 +220,6 @@ module.exports = class extends generators {
 	installDevDependency() {
 		this.npmInstall(
 			[
-				'prettier',
-				'eslint',
-				'eslint-config-prettier',
-				'eslint-plugin-prettier',
-				'eslint-plugin-jest',
 				'express',
 				'node-dev',
 			],
