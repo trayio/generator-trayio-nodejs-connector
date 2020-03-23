@@ -188,11 +188,6 @@ module.exports = class extends generators {
 	}
 	copyFiles() {
 		this.fs.copyTpl(
-			this.templatePath('.editorconfig'),
-			this.destinationPath('.editorconfig'),
-			{},
-		);
-		this.fs.copyTpl(
 			this.templatePath('README.md'),
 			this.destinationPath('README.md'),
 			{
