@@ -194,6 +194,13 @@ module.exports = class extends generators {
 				name: this.name,
 				description: this.description,
 			},
+        );
+        this.fs.copyTpl(
+			this.templatePath('release_notes.yml'),
+			this.destinationPath('release_notes.yml'),
+			{
+				name: this.name,
+			},
 		);
 	}
 	createConnectorJSON() {
@@ -251,12 +258,6 @@ module.exports = class extends generators {
 		this.fs.copyTpl(
 			this.templatePath(`${templateFolder}/global_model.js`),
 			this.destinationPath(`connectors/${this.name}/global_model.js`),
-			{},
-		);
-
-		this.fs.copyTpl(
-			this.templatePath(`${templateFolder}/global_schema.js`),
-			this.destinationPath(`connectors/${this.name}/global_schema.js`),
 			{},
 		);
 
