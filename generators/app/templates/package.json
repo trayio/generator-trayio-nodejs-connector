@@ -6,15 +6,7 @@
 	"scripts": {
 		"start": "node-dev main.js",
 		"packagei": "npm i --package-lock-only",
-		"lint": "eslint ./ --fix",
-		"test": "jest",
-		"test:unit": "jest tests/unit",
-		"test:integration": "jest tests/integration",
-		"test:pr": "npm run test:unit",
-		"test:watch": "npm run test -- --watch --notify",
-		"test:watch:unit": "npm run test:unit -- --watch --notify",
-		"test:watch:integration": "npm run test:integration -- --watch --notify",
-		"coverage": "npm run test -- --coverage"
+		"lint": "eslint ./ --fix"
 	},
 	"publishConfig": {
 		"registry": "http://registry.npmjs.org"

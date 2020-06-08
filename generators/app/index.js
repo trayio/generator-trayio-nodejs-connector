@@ -1,11 +1,7 @@
 const generators = require('yeoman-generator');
 const path = require('path');
 const slugify = require('mout/string/slugify');
-const filter = require('gulp-filter');
-const removeComments = require('gulp-decomment');
 const sentenceCase = require('mout/string/sentenceCase');
-
-const jsFilter = filter('**/*.js', { restore: true });
 
 module.exports = class extends generators {
 	constructor(args, opts) {
@@ -48,7 +44,6 @@ module.exports = class extends generators {
 				type: 'input',
 				name: 'author',
 				message: 'Author',
-				default: 'tray.io',
 			},
 			{
 				type: 'input',
@@ -61,30 +56,6 @@ module.exports = class extends generators {
 				message: 'Is trigger connector?',
 				default: false,
 			},
-			{
-				type: 'confirm',
-				name: 'removeComments',
-				message: 'Remove comments from generated files?',
-				default: false,
-			},
-			{
-				type: 'confirm',
-				name: 'addUnitTesting',
-				message: 'Add unit testing?',
-				default: false,
-			},
-			{
-				type: 'confirm',
-				name: 'addIntegrationTesting',
-				message: 'Add integration testing?',
-				default: false,
-			},
-			{
-				type: 'confirm',
-				name: 'addTestRunner',
-				message: 'Add connector test runner?',
-				default: true,
-			},
 		]);
 		this.title = title;
 		this.name = name;
@@ -93,85 +64,6 @@ module.exports = class extends generators {
 		this.author = answers.author;
 		this.repository = answers.repository;
 		this.httpTrigger = answers.httpTrigger;
-		this.removeComments = answers.removeComments;
-		this.addUnitTesting = answers.addUnitTesting;
-		this.addIntegrationTesting = answers.addIntegrationTesting;
-		this.addTestRunner = answers.addTestRunner;
-	}
-
-	addUnitTesting() {
-		if (this.addUnitTesting) {
-			this.npmInstall(['jest', 'nock', 'dotenv'], {
-				saveDev: true,
-			});
-			this.fs.copyTpl(
-				this.templatePath('jest.config.js'),
-				this.destinationPath('jest.config.js'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/setup.js`),
-				this.destinationPath('tests/setup.js'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(
-					`tests/unit/operations/sample_operation.test.js`,
-				),
-				this.destinationPath(
-					'tests/unit/operations/sample_operation.test.js',
-				),
-				{},
-			);
-		}
-	}
-
-	addIntegrationTesting() {
-		if (this.addIntegrationTesting) {
-			this.fs.copyTpl(
-				this.templatePath('.env'),
-				this.destinationPath('.env'),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath('tests/integration/sample_operation.test.js'),
-				this.destinationPath(
-					'tests/integration/sample_operation.test.js',
-				),
-				{},
-			);
-		}
-	}
-
-	addTestRunner() {
-		if (this.addTestRunner) {
-			this.npmInstall(['@trayio/connector-test-runner'], {
-				saveDev: true,
-			});
-			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/globalConfig.js`),
-				this.destinationPath(`tests/unit/operations/globalConfig.js`),
-				{},
-			);
-			this.fs.copyTpl(
-				this.templatePath(`tests/unit/operations/operations.test.js`),
-				this.destinationPath(
-					`tests/unit/operations/operations.test.js`,
-				),
-				{},
-			);
-		}
-	}
-
-	removeComments() {
-		if (this.removeComments) {
-			// Automatically remove all comments in javascript files using gulp
-			this.registerTransformStream([
-				jsFilter,
-				removeComments(),
-				jsFilter.restore,
-			]);
-		}
 	}
 
 	createPackage() {
@@ -194,13 +86,6 @@ module.exports = class extends generators {
 				name: this.name,
 				description: this.description,
 			},
-        );
-        this.fs.copyTpl(
-			this.templatePath('release_notes.yml'),
-			this.destinationPath('release_notes.yml'),
-			{
-				name: this.name,
-			},
 		);
 	}
 	createConnectorJSON() {
@@ -220,15 +105,9 @@ module.exports = class extends generators {
 		});
 	}
 	installDevDependency() {
-		this.npmInstall(
-			[
-				'express',
-				'node-dev',
-			],
-			{
-				saveDev: true,
-			},
-		);
+		this.npmInstall(['express', 'node-dev'], {
+			saveDev: true,
+		});
 	}
 	createMain() {
 		this.fs.copyTpl(
