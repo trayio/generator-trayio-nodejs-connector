@@ -105,7 +105,7 @@ module.exports = class extends generators {
 		});
 	}
 	installDevDependency() {
-		this.npmInstall(['express', 'node-dev'], {
+		this.npmInstall(['express'], {
 			saveDev: true,
 		});
 	}
