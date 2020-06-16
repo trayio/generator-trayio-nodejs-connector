@@ -8,7 +8,7 @@ allowUnknownKeyHostsPairsInGit() {
 
 checkIfAlreadyPublished() {
   name=$(node -pe "require('./package.json').name")
-  latestVersion=$(npm show $name:latest version)
+  latestVersion=$(npm show $name@latest version)
   if [ "$latestVersion" == "$version" ]; then
     echo "Version $version is already the latest published version"
     exit 0
